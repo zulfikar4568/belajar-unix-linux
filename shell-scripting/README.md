@@ -145,3 +145,127 @@ Put the command for crontab
 After typing out the cron expression, hit esc and then type :wq to save and exit vim.
 
 Notes: [Permission cron Access disk in Mac](https://www.bejarano.io/fixing-cron-jobs-in-mojave/)
+
+## 11. Return Code
+```bash
+#!/bin/bash
+
+# The value is 0 - 255
+# 0 = success
+# if not 0 is failed
+
+# ls /not/here
+# echo $?
+
+HOST="google.com"; ping -c 1 $HOST && echo "ping $HOST ....";
+
+if [ "$?" -eq "0" ]; then
+  echo "$HOST reachable with status $?"; #HOST ok
+  exit 0;
+else
+  echo "$HOST unreachable with status $?"; # HOST error
+  exit 1;
+fi
+```
+
+## 12. Function
+```bash
+#!/bin/bash
+
+function function1() {
+  echo "Function 1";
+  echo $0 # Name file
+  echo $1 # Parameter 1
+  echo $2 # Parameter 2
+
+  for NAME in $@
+    do
+      echo "Hallo $NAME"
+  done
+}
+
+function2() {
+  echo "Function 2";
+}
+
+function1 zulfikar isnaen
+
+# SCOPE VARIABLE
+# Variable scope in shell scripting is global, if we want to create local, use "local"
+#### EXAMPLE 1 ####
+# GLOBAL_VARIABLE=1
+# Variable GLOBAL_VARIABLE will available in function 2
+# function2
+
+#### EXAMPLE 2 ####
+# function2
+# Variable GLOBAL_VARIABLE will not available in function 2
+# GLOBAL_VARIABLE=1
+
+function print_name() {
+  local NAME=Jack #Local variable
+  echo "Hallo $NAME"
+}
+echo $NAME
+print_name
+```
+
+## 13. Case
+```bash
+#!/bin/bash
+
+COLOR=blue
+
+case $COLOR in
+  blue)
+    echo "BIRU $COLOR"
+    ;;
+  green)
+    echo "GREEN $COLOR"
+    ;;
+esac
+
+
+read -p "Enter y or n: " ANSWER
+case $ANSWER in
+  [yY]|[yY][eE][sS])
+    echo "You answer yes"
+  ;;
+  [nN]|[nN][oO])
+    echo "You answer no"
+  ;;
+esac
+```
+
+## 14. Wildcard
+```bash
+#!/bin/bash
+
+ls *.sh
+ls *.?h
+ls f*
+ls r*.sh
+ls r[abcde]*.sh
+ls f[[:lower:]]*.sh
+
+ls ?.sh
+ls a?
+ls a?.sh
+
+for FILE in *.sh
+do
+  echo "File Bash : $FILE"
+done
+```
+
+## 15. Stream
+./stream.sh < data.txt
+[Reference](https://www.baeldung.com/linux/stream-redirections)
+```bash
+#!/bin/bash
+
+read -p "Masukan nama : " name
+read -p "Masukan email : " email
+
+echo "Nama nya $name Emailnya $email"
+```
